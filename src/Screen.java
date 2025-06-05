@@ -12,6 +12,9 @@ import javax.swing.JWindow;
 public class Screen {
     public static void main(String[] args) {
         Screen self = new Screen();
+        ResourceHandler.handleAllResources();
+        Information.setDateFormat("dd");
+        Information.setTimeFormat("hh:mma");
         Main_Visual main_vis = self.new Main_Visual();
     }
 
@@ -31,7 +34,6 @@ public class Screen {
                 (int) location.getY() + (int) location.getHeight() - getHeight()
             );
 
-            setVisible(true);
 
             addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
@@ -40,7 +42,10 @@ public class Screen {
                     }
                 }
             });
+            GraphicsController.createBufferedCanvas(getBounds());
+            GraphicsController.generateBackgroundGraphic();
 
+            setVisible(true);
             repaint();
         }
 
@@ -50,8 +55,7 @@ public class Screen {
         }
 
         public void paint(Graphics g) {
-            BufferedImage bIm = GraphicsController.createBufferedCanvas(getBounds());
-            GraphicsController.generateBackgroundGraphic(bIm);
+            BufferedImage bIm = GraphicsController.generateFullGraphics();
             g.drawImage(bIm, 0, 0, null);
         }
     }
