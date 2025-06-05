@@ -1,7 +1,0 @@
-[33m37cc9b7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{2025-06-04 15:53:47 -0500}: reset: moving to HEAD~1
-[33mc5b1776[m HEAD@{2025-06-04 15:52:45 -0500}: reset: moving to HEAD~1
-[33m8e2da49[m[33m ([m[1;31mWindow-Widget-Remote/main[m[33m)[m HEAD@{2025-06-04 15:38:11 -0500}: commit: Including GraphicsController.java into project. Current function creates backgrounds and handles creation of BufferedImage to write to for final display. Adding double-buffered graphics for smooth rendering and recycling.
-[33mc5b1776[m HEAD@{2025-06-03 18:30:47 -0500}: reset: moving to c5b17760826f1c9b302fdeafc34192a8efa7bf6e
-[33mc5b1776[m HEAD@{2025-06-03 18:30:18 -0500}: commit: change program usage to utilize a JWindow which displays on the second window (primary target window)
-[33m37cc9b7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{2025-06-03 17:54:55 -0500}: commit (initial): Initialized project setup of Java project.
-[33m3bfa7f9[m HEAD@{2025-06-03 17:51:16 -0500}: commit (initial): Initialized project setup of Java project.
