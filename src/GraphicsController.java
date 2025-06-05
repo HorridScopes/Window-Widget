@@ -54,14 +54,34 @@ public class GraphicsController {
         Font font = ResourceHandler.fontCache.get("AlumniSansSC");
         font.deriveFont(Font.BOLD);
         String time = Information.getTimeAsString();
+        
         while (font.getSize() < bIm.getHeight() * 0.8) {
             font = font.deriveFont((float) (font.getSize() + 1));
         }
         g2d.setFont(font);
         java.awt.geom.Rectangle2D bounds = g2d.getFontMetrics(font).getStringBounds(time, g2d);
         
-        g2d.drawString(time, (int) (bIm.getWidth() - bounds.getWidth()) / 2, (int) (bIm.getHeight() * 0.6));
-        g2d.setColor(g2d.getColor().darker().darker());
+        Point timeLocation = new Point((int) (bIm.getWidth() - bounds.getWidth()) / 2, (int) (bIm.getHeight() * 0.6));
+        g2d.drawString(time, (int)timeLocation.getX(), (int)timeLocation.getY());
+        
+        font = ResourceHandler.fontCache.get("AlumniSansSC");
+        while(font.getSize() < g2d.getFont().getSize()){
+            font = font.deriveFont(font.getSize() + 1f);
+        }
+        String[] sec = Information.getTimeOfSecond().split("");
+
+        int mainTimeWidth = g2d.getFontMetrics(g2d.getFont()).stringWidth(time.split(" ")[0]);
+        mainTimeWidth += 12;
+        font = ResourceHandler.fontCache.get("AlumniSansSC");
+        while(font.getSize() * 2 < g2d.getFont().getSize() * 0.9){
+            font = font.deriveFont(font.getSize() + 1f);
+        }
+        font = font.deriveFont(Font.BOLD);      
+        g2d.setFont(font);
+        g2d.drawString(sec[0],mainTimeWidth + (int)timeLocation.getX(), (int)timeLocation.getY() - (int)(g2d.getFont().getSize() * 0.7));
+        g2d.drawString(sec[1],mainTimeWidth + (int)timeLocation.getX(), (int)timeLocation.getY());
+
+
 
         g2d.dispose();
     }

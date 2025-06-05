@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -14,7 +15,7 @@ public class Screen {
         Screen self = new Screen();
         ResourceHandler.handleAllResources();
         Information.setDateFormat("dd");
-        Information.setTimeFormat("hh:mma");
+        Information.setTimeFormat("hh:mm  a");
         Main_Visual main_vis = self.new Main_Visual();
     }
 
@@ -47,6 +48,13 @@ public class Screen {
 
             setVisible(true);
             repaint();
+
+            while(true){
+                try { Thread.sleep(100);
+                } catch (InterruptedException e1) { }
+
+                repaint();
+            }
         }
 
         public void exitWindow() {
@@ -55,8 +63,15 @@ public class Screen {
         }
 
         public void paint(Graphics g) {
+            Graphics2D g2d = (Graphics2D)g;
+            g2d.setComposite(java.awt.AlphaComposite.Clear);
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+            g2d.setComposite(java.awt.AlphaComposite.SrcOver);
+
             BufferedImage bIm = GraphicsController.generateFullGraphics();
-            g.drawImage(bIm, 0, 0, null);
+            g2d.drawImage(bIm, 0, 0, null);
+
+            g2d.dispose();
         }
     }
 }

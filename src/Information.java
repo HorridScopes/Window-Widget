@@ -25,5 +25,9 @@ public class Information {
         return OffsetDateTime.now().format(timeFormat);
     }
 
+    public static String getTimeOfSecond(){
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("ss"));
+    }
+
     
 }
