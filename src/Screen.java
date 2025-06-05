@@ -14,7 +14,7 @@ public class Screen {
     public static void main(String[] args) {
         Screen self = new Screen();
         ResourceHandler.handleAllResources();
-        Information.setDateFormat("dd");
+        Information.setDateFormat("MM - dd - yyyy");
         Information.setTimeFormat("hh:mm  a");
         Main_Visual main_vis = self.new Main_Visual();
     }

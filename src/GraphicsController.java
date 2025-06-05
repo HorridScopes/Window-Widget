@@ -2,8 +2,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.time.Month;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GradientPaint;
 
@@ -59,10 +62,14 @@ public class GraphicsController {
             font = font.deriveFont((float) (font.getSize() + 1));
         }
         g2d.setFont(font);
-        java.awt.geom.Rectangle2D bounds = g2d.getFontMetrics(font).getStringBounds(time, g2d);
         
-        Point timeLocation = new Point((int) (bIm.getWidth() - bounds.getWidth()) / 2, (int) (bIm.getHeight() * 0.6));
-        g2d.drawString(time, (int)timeLocation.getX(), (int)timeLocation.getY());
+        Point timeLocation = Information.getCenteredTextCoordinate(font, time);
+        timeLocation.y += (int)(bIm.getHeight() * 0.1);
+        timeLocation.x += (int)(bIm.getWidth() * 0.5);
+
+        Rectangle timeBounds = g2d.getFontMetrics().getStringBounds(time, g2d).getBounds();
+        timeBounds.setLocation((int)timeLocation.getX(), (int)timeLocation.getY());
+        g2d.drawString(time, (int)timeBounds.getX(), (int)timeBounds.getY());
         
         font = ResourceHandler.fontCache.get("AlumniSansSC");
         while(font.getSize() < g2d.getFont().getSize()){
@@ -82,8 +89,40 @@ public class GraphicsController {
         g2d.drawString(sec[1],mainTimeWidth + (int)timeLocation.getX(), (int)timeLocation.getY());
 
 
+        font = ResourceHandler.fontCache.get("AlumniSansSC");
+        font.deriveFont(1f);
+        while(font.getSize() < (bIm.getHeight() - timeLocation.getY()) * 0.6){
+            font = font.deriveFont(font.getSize() + 1f);
+        }
 
+        String date = Information.getDateAsString();
+
+        g2d.setFont(font);
+        g2d.setColor(Color.WHITE); // Set text color as needed
+
+        Point centeredTextCoordinate = Information.getCenteredTextCoordinate(font, date);
+        g2d.drawString(date, centeredTextCoordinate.x + (int)(bIm.getWidth() / 2), (int)(bIm.getHeight() * 0.8));
+
+        
+        drawSideInformation(g2d, new Dimension(bIm.getWidth(), bIm.getHeight()));
+    
         g2d.dispose();
+    }
+
+    public static void drawSideInformation(Graphics2D g2d, Dimension size){
+        String[] lines = {
+            System.getProperty("user.name").toUpperCase(),
+            Long.toString(System.currentTimeMillis())
+        };
+
+        Font font = ResourceHandler.fontCache.get("AlumniSansSC");
+        font = font.deriveFont((float)(size.height * 0.1));
+        g2d.setFont(font);
+        int step = font.getSize();
+        for(int i = 0; i < lines.length; i ++){
+            g2d.drawString(lines[i],(int)(size.width * 0.01),((i + 1) * step) + (int)(size.height * 0.1));
+        }
+
     }
 
     public static BufferedImage generateFullGraphics() {
